@@ -1,1 +1,2 @@
-## Startbestand basisfunctionaliteiten uitbreiding
+#Vue - Opdracht 6
+Template
