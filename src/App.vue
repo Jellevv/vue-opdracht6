@@ -1,3 +1,108 @@
+<template>
+  <div class="col">
+    <input type="text" v-model="input">
+    <p>{{ input }}</p>
+    <button @click="increaseCounter()">{{ counter }}</button>
+    <p>{{ goalAchieved }}</p>
+    <!-- Enkel bij methods moeten er () achter een functie. omdat goalAchieved in computed staat, moeten er geen haken-->
+    <input type="text" v-model="newtask">
+    <button @click="addTask()">Taak toevoegen</button>
+    <p v-if="hasTasks == false">Alle taken werden uitgevoerd!</p>
+    <p v-else>Er zijn nieuwe taken beschikbaar.</p>
+    <ol>
+      <li v-for="(item, index) in tasks" @click="removeTask(item)" :key="index">{{ item }}</li>
+    </ol>
+  </div>
+</template>
+
+<script>
+import JSConfetti from 'js-confetti'
+import { computed } from 'vue';
+
+export default {
+  computed: {
+    hasTasks() {
+      if (this.tasks.length == 0) {
+        return false
+      } else {
+        return true
+      }
+    },
+    goalAchieved() {
+      if (this.counter >= 10) {
+        this.jsConfetti.addConfetti()
+        return 'Doel bereikt!'
+      }
+      else {
+        return 'Klik nog meer!'
+      }
+    }
+  },
+
+  data() {
+    return {
+      counter: 0,
+      jsConfetti: new JSConfetti(),
+      input: '',
+      tasks: [],
+      newtask: ''
+    }
+  },
+
+  methods: {
+    increaseCounter() {
+      this.counter++
+    },
+    addTask() {
+      this.tasks.push(this.newtask)
+      this.newtask = ''
+    },
+    removeTask(item) {
+        const index = this.tasks.indexOf(item);
+        this.tasks.splice(index, 1);
+    }
+  },
+}
+</script>
+
+<style>
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 25%;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 2rem;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+oplossing
 <script>
   import moment from 'moment'
 
@@ -86,4 +191,4 @@
   margin: 2rem auto;
   padding: 1rem;
 }
-</style>
+</style> -->
